@@ -21,15 +21,15 @@ func (CLSTProtobufHeaderSchema) Name() PayloadEncoding {
 
 // DeserializePayload reads the schema from headers and deserializes the payload.
 func (d CLSTProtobufHeaderSchema) DeserializePayload(ctx context.Context, record *kgo.Record, payloadType PayloadType) (*RecordPayload, error) {
+	fmt.Println("CLST: Deserializing payload using header schema...")
 	// Get schema info from headers
 	schemaInfo, err := getSchemaInfoFromHeaders(record)
 	if err != nil {
-		return nil, fmt.Errorf("failed to extract schema info from headers: %w", err)
+		return &RecordPayload{}, fmt.Errorf("CLST: failed to extract schema info from headers: %w", err)
 	}
-
 	// Log extracted header info (optional)
-	fmt.Printf("SchemaID: %d, KeyEncoding: %s, ValueEncoding: %s, ProtobufTypeValue: %s\n",
-		schemaInfo.SchemaID, schemaInfo.KeyEncoding, schemaInfo.ValueEncoding, schemaInfo.ProtobufTypeValue)
+	fmt.Printf("KeyEncoding: %s, ValueEncoding: %s, ProtobufTypeValue: %s\n",
+		schemaInfo.KeyEncoding, schemaInfo.ValueEncoding, schemaInfo.ProtobufTypeValue)
 
 	// Deserialize payload (as JSON for simplicity)
 	payload := payloadFromRecord(record, payloadType)
