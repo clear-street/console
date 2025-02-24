@@ -45,6 +45,7 @@ func NewService(schemaService *schema.Service, protoSvc *proto.Service, msgPackS
 			TextSerde{},
 			UintSerde{},
 			BinarySerde{},
+			CLSTHeaderSchemaSerde{ProtoSvc: protoSvc},
 		},
 	}
 }

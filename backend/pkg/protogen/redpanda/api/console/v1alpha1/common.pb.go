@@ -82,22 +82,23 @@ func (CompressionType) EnumDescriptor() ([]byte, []int) {
 type PayloadEncoding int32
 
 const (
-	PayloadEncoding_PAYLOAD_ENCODING_UNSPECIFIED      PayloadEncoding = 0
-	PayloadEncoding_PAYLOAD_ENCODING_NULL             PayloadEncoding = 1
-	PayloadEncoding_PAYLOAD_ENCODING_AVRO             PayloadEncoding = 2
-	PayloadEncoding_PAYLOAD_ENCODING_PROTOBUF         PayloadEncoding = 3
-	PayloadEncoding_PAYLOAD_ENCODING_PROTOBUF_SCHEMA  PayloadEncoding = 4
-	PayloadEncoding_PAYLOAD_ENCODING_JSON             PayloadEncoding = 5
-	PayloadEncoding_PAYLOAD_ENCODING_JSON_SCHEMA      PayloadEncoding = 6
-	PayloadEncoding_PAYLOAD_ENCODING_XML              PayloadEncoding = 7
-	PayloadEncoding_PAYLOAD_ENCODING_TEXT             PayloadEncoding = 8
-	PayloadEncoding_PAYLOAD_ENCODING_UTF8             PayloadEncoding = 9
-	PayloadEncoding_PAYLOAD_ENCODING_MESSAGE_PACK     PayloadEncoding = 10
-	PayloadEncoding_PAYLOAD_ENCODING_SMILE            PayloadEncoding = 11
-	PayloadEncoding_PAYLOAD_ENCODING_BINARY           PayloadEncoding = 12
-	PayloadEncoding_PAYLOAD_ENCODING_UINT             PayloadEncoding = 13
-	PayloadEncoding_PAYLOAD_ENCODING_CONSUMER_OFFSETS PayloadEncoding = 14
-	PayloadEncoding_PAYLOAD_ENCODING_CBOR             PayloadEncoding = 15
+	PayloadEncoding_PAYLOAD_ENCODING_UNSPECIFIED      			PayloadEncoding = 0
+	PayloadEncoding_PAYLOAD_ENCODING_NULL             			PayloadEncoding = 1
+	PayloadEncoding_PAYLOAD_ENCODING_AVRO             			PayloadEncoding = 2
+	PayloadEncoding_PAYLOAD_ENCODING_PROTOBUF         			PayloadEncoding = 3
+	PayloadEncoding_PAYLOAD_ENCODING_PROTOBUF_SCHEMA  			PayloadEncoding = 4
+	PayloadEncoding_PAYLOAD_ENCODING_JSON             			PayloadEncoding = 5
+	PayloadEncoding_PAYLOAD_ENCODING_JSON_SCHEMA      			PayloadEncoding = 6
+	PayloadEncoding_PAYLOAD_ENCODING_XML              			PayloadEncoding = 7
+	PayloadEncoding_PAYLOAD_ENCODING_TEXT             			PayloadEncoding = 8
+	PayloadEncoding_PAYLOAD_ENCODING_UTF8             			PayloadEncoding = 9
+	PayloadEncoding_PAYLOAD_ENCODING_MESSAGE_PACK     			PayloadEncoding = 10
+	PayloadEncoding_PAYLOAD_ENCODING_SMILE            			PayloadEncoding = 11
+	PayloadEncoding_PAYLOAD_ENCODING_BINARY           			PayloadEncoding = 12
+	PayloadEncoding_PAYLOAD_ENCODING_UINT             			PayloadEncoding = 13
+	PayloadEncoding_PAYLOAD_ENCODING_CONSUMER_OFFSETS 			PayloadEncoding = 14
+	PayloadEncoding_PAYLOAD_ENCODING_CBOR             			PayloadEncoding = 15
+	PayloadEncoding_PAYLOAD_ENCODING_CLST_HEADERS_SCHEMA PayloadEncoding = 16
 )
 
 // Enum value maps for PayloadEncoding.
@@ -119,6 +120,7 @@ var (
 		13: "PAYLOAD_ENCODING_UINT",
 		14: "PAYLOAD_ENCODING_CONSUMER_OFFSETS",
 		15: "PAYLOAD_ENCODING_CBOR",
+		16: "PAYLOAD_ENCODING_CLST_HEADERS_SCHEMA",
 	}
 	PayloadEncoding_value = map[string]int32{
 		"PAYLOAD_ENCODING_UNSPECIFIED":      0,
@@ -137,6 +139,7 @@ var (
 		"PAYLOAD_ENCODING_UINT":             13,
 		"PAYLOAD_ENCODING_CONSUMER_OFFSETS": 14,
 		"PAYLOAD_ENCODING_CBOR":             15,
+		"PAYLOAD_ENCODING_CLST_HEADERS_SCHEMA":     16,
 	}
 )
 

@@ -1,63 +1,70 @@
 package serde
 
 import (
-	"errors"
+	"encoding/json"
+	"fmt"
 	"reflect"
-	"strconv"
 	"strings"
 
 	"github.com/twmb/franz-go/pkg/kgo"
 )
 
+type HeaderPayload struct {
+	Payload  string `json:"payload"`
+	Encoding string `json:"encoding"`
+}
+
+// SchemaInfo holds only the relevant headers:
+// 'key.encoding', 'value.encoding', 'protobuf.type.value', 'protobuf.type.key'
+type SchemaInfo struct {
+	KeyEncoding       string
+	ValueEncoding     string
+	ProtobufTypeKey   string
+	ProtobufTypeValue string
+}
+
+// Mapping each header key to the corresponding field in SchemaInfo.
+var onlyHeaders = map[string]string{
+	"key.encoding":        "KeyEncoding",
+	"value.encoding":      "ValueEncoding",
+	"protobuf.type.key":   "ProtobufTypeKey",
+	"protobuf.type.value": "ProtobufTypeValue",
+}
+
 // getSchemaInfoFromHeaders maps headers to SchemaInfo fields using reflection and type handlers
 func getSchemaInfoFromHeaders(record *kgo.Record) (SchemaInfo, error) {
+	fmt.Println("Extracting headers from record")
 	var info SchemaInfo
-	infoValue := reflect.ValueOf(&info).Elem()
 
-	// Map of type handlers (dispatch pattern)
-	typeHandlers := map[reflect.Kind]func([]byte, reflect.Value) error{
-		reflect.String: func(value []byte, field reflect.Value) error {
-			field.SetString(string(value))
-			return nil
-		},
-		reflect.Uint32: func(value []byte, field reflect.Value) error {
-			val, err := strconv.ParseUint(string(value), 10, 32)
-			if err != nil {
-				return err
-			}
-			field.SetUint(val)
-			return nil
-		},
-	}
+	// We'll use reflection to set fields in SchemaInfo only for the headers we care about
+	infoVal := reflect.ValueOf(&info).Elem()
 
-	for _, header := range record.Headers {
-		fieldName := toCamelCase(header.Key)
-		field := infoValue.FieldByName(fieldName)
+	for _, h := range record.Headers {
+		// If this header is not in our onlyHeaders map, skip
+		fieldName, exists := onlyHeaders[h.Key]
+		if !exists {
+			continue
+		}
 
-		if field.IsValid() && field.CanSet() {
-			if handler, found := typeHandlers[field.Kind()]; found {
-				if err := handler(header.Value, field); err != nil {
-					return info, err
-				}
-			}
+		var headerPayload HeaderPayload
+		if err := json.Unmarshal(h.Value, &headerPayload); err != nil {
+			fmt.Printf("Skipping header %s due to unmarshal error: %v\n", h.Key, err)
+			continue
+		}
+
+		// hp.Payload often has extra quotes, e.g. "proto"; let's strip them
+		parsed := strings.Trim(headerPayload.Payload, "\"")
+
+		// Set the field in SchemaInfo
+		f := infoVal.FieldByName(fieldName)
+		if f.IsValid() && f.CanSet() {
+			// We only store string fields in SchemaInfo, so setString
+			f.SetString(parsed)
 		}
 	}
 
-	// Validation: Ensure at least one known header is set
-	if info.KeyEncoding == "" && info.ValueEncoding == "" && info.ProtobufTypeValue == "" {
-		return info, errors.New("no known headers found in the record")
-	}
-
+	// No mandatory requirement except we skip schema_id here,
+	// so we won't do a custom check. Return the info.
+	fmt.Println("Final extracted SchemaInfo:", info)
 	return info, nil
-}
-
-// toCamelCase converts snake_case, kebab-case, or dot.case to CamelCase
-func toCamelCase(input string) string {
-	parts := strings.FieldsFunc(input, func(r rune) bool {
-		return r == '_' || r == '.' || r == '-'
-	})
-	for i, part := range parts {
-		parts[i] = strings.Title(part)
-	}
-	return strings.Join(parts, "")
 }

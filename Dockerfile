@@ -60,6 +60,11 @@ WORKDIR /app
 COPY --from=builder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
 COPY --from=builder /app/bin/console /app/console
 
+COPY ./config /app/config
+
+# Set environment variables
+ENV CONFIG_FILEPATH=/app/config/local_config.yml
+
 # Add github.com to known SSH hosts by default (required for pulling topic docs & proto files from a Git repo)
 RUN apk update && apk add --no-cache openssh
 RUN ssh-keyscan github.com >> /etc/ssh/ssh_known_hosts
