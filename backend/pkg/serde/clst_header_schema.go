@@ -14,16 +14,12 @@ import (
 	"fmt"
 
 	"github.com/twmb/franz-go/pkg/kgo"
-
-	"github.com/redpanda-data/console/backend/pkg/proto"
 )
 
 // Compile-time check to ensure CLSTHeaderSchemaSerde implements Serde
 var _ Serde = (*CLSTHeaderSchemaSerde)(nil)
 
-type CLSTHeaderSchemaSerde struct {
-	ProtoSvc *proto.Service
-}
+type CLSTHeaderSchemaSerde struct{}
 
 // SerializeObject implements Serde.
 func (d CLSTHeaderSchemaSerde) SerializeObject(ctx context.Context, obj any, payloadType PayloadType, opts ...SerdeOpt) ([]byte, error) {
