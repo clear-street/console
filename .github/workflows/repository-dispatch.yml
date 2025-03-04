@@ -1,5 +1,6 @@
 ---
 name: Repository dispatch on push or release
+if: ${{ false }}
 on:
   push:
     paths:
@@ -9,6 +10,14 @@ on:
       - '*'
     branches:
       - '**'
+env:
+  RP_AWS_CRED_REGION: us-east-1
+  RP_AWS_CRED_BASE_ROLE_NAME: github-actions-bot-role-
+  ACTIONS_BOT_TOKEN: ${{ secrets.ACTIONS_BOT_TOKEN }}
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  RP_GITHUB_REPO: redpanda-data/console-enterprise
+  RP_GITHUB_REPO_OWNER: redpanda-data
+  RP_GITHUB_REPO_NAME: console-enterprise
 permissions:
   id-token: write
   contents: read
