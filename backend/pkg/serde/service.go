@@ -38,6 +38,7 @@ func NewService(schemaService *schema.Service, protoSvc *proto.Service, msgPackS
 			AvroSerde{SchemaSvc: schemaService},
 			ProtobufSerde{ProtoSvc: protoSvc},
 			ProtobufSchemaSerde{ProtoSvc: protoSvc},
+			CLSTHeaderSchemaSerde{},
 			MsgPackSerde{MsgPackService: msgPackSvc},
 			SmileSerde{},
 			CborSerde{Config: cborConfig},
@@ -45,7 +46,6 @@ func NewService(schemaService *schema.Service, protoSvc *proto.Service, msgPackS
 			TextSerde{},
 			UintSerde{},
 			BinarySerde{},
-			CLSTHeaderSchemaSerde{},
 		},
 	}
 }

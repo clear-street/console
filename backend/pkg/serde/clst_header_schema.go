@@ -23,7 +23,7 @@ type CLSTHeaderSchemaSerde struct{}
 
 // SerializeObject implements Serde.
 func (d CLSTHeaderSchemaSerde) SerializeObject(ctx context.Context, obj any, payloadType PayloadType, opts ...SerdeOpt) ([]byte, error) {
-	panic("unimplemented")
+	return nil, fmt.Errorf("CLST Serialize Not implemented")
 }
 
 func (CLSTHeaderSchemaSerde) Name() PayloadEncoding {
