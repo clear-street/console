@@ -24,20 +24,21 @@ import (
 // Compile-time check to ensure CLSTHeaderSchemaSerde implements Serde
 var _ Serde = (*CLSTHeaderSchemaSerde)(nil)
 
+// CLSTHeaderSchemaSerde represents the serde for dealing with CLST header schema types.
 type CLSTHeaderSchemaSerde struct{}
 
 // SerializeObject implements Serde.
-func (d CLSTHeaderSchemaSerde) SerializeObject(ctx context.Context, obj any, payloadType PayloadType, opts ...SerdeOpt) ([]byte, error) {
+func (d CLSTHeaderSchemaSerde) SerializeObject(_ context.Context, obj any, payloadType PayloadType, opts ...SerdeOpt) ([]byte, error) {
 	return nil, fmt.Errorf("CLST Serialize Not implemented")
 }
 
+// Name returns the name of the serde payload encoding.
 func (CLSTHeaderSchemaSerde) Name() PayloadEncoding {
 	return PayloadEncodingCLSTHeaderSchema
 }
 
 // DeserializePayload maps relevant headers into SchemaInfo
-func (headerSchemaSerde CLSTHeaderSchemaSerde) DeserializePayload(ctx context.Context, record *kgo.Record, payloadType PayloadType) (*RecordPayload, error) {
-
+func (headerSchemaSerde CLSTHeaderSchemaSerde) DeserializePayload(_ context.Context, record *kgo.Record, payloadType PayloadType) (*RecordPayload, error) {
 	// fmt.Printf("Record Value: %+v \n\n Record Key: %s\n\n", string(record.Value), string(record.Key))
 	schemaInfo, err := getSchemaInfoFromHeaders(record)
 	if err != nil {

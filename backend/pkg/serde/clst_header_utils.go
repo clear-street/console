@@ -2,6 +2,7 @@ package serde
 
 import (
 	"bytes"
+	"context"
 	"encoding/hex"
 	"encoding/json"
 	"errors"
@@ -98,16 +99,6 @@ func getSchemaInfoFromHeaders(record *kgo.Record) (SchemaInfo, error) {
 		}
 	}
 
-	// Check if key and value are valid format
-	// e.g: "apollo.bk.v1.TransactionKey"
-	// if !isValidType(info.ProtobufTypeKey) {
-	// 	return info, fmt.Errorf("invalid proto type key: %v", info.ProtobufTypeKey)
-	// }
-
-	// if !isValidType(info.ProtobufTypeValue) {
-	// 	return info, fmt.Errorf("invalid proto type value: %v", info.ProtobufTypeValue)
-	// }
-
 	return info, nil
 }
 
@@ -136,6 +127,7 @@ func getMessageDescriptor(module string, version string, symbols []string, fully
 		"symbols": symbols,
 	}
 
+	url := "https://clst.buf.team/buf.reflect.v1beta1.FileDescriptorSetService/GetFileDescriptorSet"
 	// To be put on config
 	token := "5bbe858e4594d1dc08dc1b558f05a624e77e75e6f0477cc2b11c9986a78b0917"
 	jsonReq, err := json.Marshal(requestMap)
@@ -143,8 +135,8 @@ func getMessageDescriptor(module string, version string, symbols []string, fully
 		return nil, fmt.Errorf("failed to marshal request: %w", err)
 	}
 
-	url := "https://clst.buf.team/buf.reflect.v1beta1.FileDescriptorSetService/GetFileDescriptorSet"
-	req, err := http.NewRequest("POST", url, bytes.NewBuffer(jsonReq))
+	ctx := context.Background() // Use a real context in production
+	req, err := http.NewRequestWithContext(ctx, "POST", url, bytes.NewBuffer(jsonReq))
 	if err != nil {
 		return nil, fmt.Errorf("failed to create POST request: %w", err)
 	}
@@ -193,7 +185,6 @@ func getMessageDescriptor(module string, version string, symbols []string, fully
 	}
 
 	fullName := protoreflect.FullName(fullyQualifiedName)
-	// desc, err := files.FindDescriptorByName(fullName)
 	desc, err := files.FindDescriptorByName(fullName)
 	if err != nil {
 		return nil, fmt.Errorf("could not find descriptor for %q: %w", fullName, err)
@@ -288,7 +279,7 @@ func fixKeys(jsonBytes []byte) []byte {
 func fixAnyFields(msg *dynamicpb.Message) {
 	// msgReflect := msg.ProtoReflect()
 	// **Iterate Over Fields & Handle `Any` Fields Separately**
-	msg.ProtoReflect().Range(func(fd protoreflect.FieldDescriptor, value protoreflect.Value) bool {
+	msg.ProtoReflect().Range(func(fd protoreflect.FieldDescriptor, _ protoreflect.Value) bool {
 		if fd.Message() != nil {
 			fullN := string(fd.Message().FullName())
 			if fullN == "google.protobuf.Any" {
