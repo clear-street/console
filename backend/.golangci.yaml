@@ -152,6 +152,7 @@ linters-settings:
       - typeDefFirst
       - paramTypeCombine
       - unnamedResult
+      - commentedOutCode
       #settings:
       #  hugeParam:
       #    sizeThreshold: 256

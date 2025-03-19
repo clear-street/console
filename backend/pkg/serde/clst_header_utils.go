@@ -120,7 +120,6 @@ func getSchemaInfoFromHeaders(record *kgo.Record) (SchemaInfo, error) {
 *
  */
 func getMessageDescriptor(module string, version string, symbols []string, fullyQualifiedName string) (protoreflect.MessageDescriptor, error) {
-
 	requestMap := map[string]any{
 		"module":  module,
 		"version": version,
@@ -136,7 +135,7 @@ func getMessageDescriptor(module string, version string, symbols []string, fully
 	}
 
 	ctx := context.Background() // Use a real context in production
-	req, err := http.NewRequestWithContext(ctx, "POST", url, bytes.NewBuffer(jsonReq))
+	req, err := http.NewRequestWithContext(ctx, http.MethodPost, url, bytes.NewBuffer(jsonReq))
 	if err != nil {
 		return nil, fmt.Errorf("failed to create POST request: %w", err)
 	}

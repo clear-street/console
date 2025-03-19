@@ -15,7 +15,6 @@ import (
 	"fmt"
 
 	"github.com/twmb/franz-go/pkg/kgo"
-
 	"google.golang.org/protobuf/encoding/protojson"
 	"google.golang.org/protobuf/proto"
 	"google.golang.org/protobuf/types/dynamicpb"
@@ -28,7 +27,7 @@ var _ Serde = (*CLSTHeaderSchemaSerde)(nil)
 type CLSTHeaderSchemaSerde struct{}
 
 // SerializeObject implements Serde.
-func (d CLSTHeaderSchemaSerde) SerializeObject(_ context.Context, obj any, payloadType PayloadType, opts ...SerdeOpt) ([]byte, error) {
+func (headerSchemaSerde CLSTHeaderSchemaSerde) SerializeObject(_ context.Context, _ any, _ PayloadType, _ ...SerdeOpt) ([]byte, error) {
 	return nil, fmt.Errorf("CLST Serialize Not implemented")
 }
 

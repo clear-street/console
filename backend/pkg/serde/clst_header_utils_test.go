@@ -18,6 +18,7 @@ import (
 	"github.com/twmb/franz-go/pkg/kgo"
 )
 
+//nolint:unused // Kept for test purposes
 var rawProtoBKEvent = []byte{
 	10, 12, 84, 114, 97, 100, 101, 67, 114, 101, 97, 116, 101, 100, 18, 13,
 	98, 107, 116, 120, 112, 114, 111, 99, 101, 115, 115, 111, 114, 24, 254, 128, 169, 175, 217, 50,
@@ -54,6 +55,7 @@ var rawProtoBKEvent = []byte{
 	97, 55, 52, 54, 99, 98, 56, 50, 52, 50, 57, 54, 56,
 }
 
+//nolint:unused // Kept for test purposes
 var rawProtoBKTransactionKey = []byte{
 	10, 12, 84, 114, 97, 100, 101, 67, 114, 101, 97, 116, 101, 100, 18, 13,
 	98, 107, 116, 120, 112, 114, 111, 99, 101, 115, 115, 111, 114, 24, 230, 191,
@@ -90,6 +92,7 @@ var rawProtoBKTransactionKey = []byte{
 	98, 99, 55, 56, 55, 55, 49, 51, 54, 98, 55, 50,
 }
 
+//nolint:unused // Kept for test purposes
 var rawProtoLunaSessionCordEvents = []byte{
 	10, 36, 55, 101, 51, 48, 55, 48, 54, 55, 45, 56, 51, 52, 100, 45, 52, 55, 56, 49, 45,
 	57, 49, 55, 101, 45, 57, 101, 56, 53, 51, 99, 99, 54, 54, 98, 56, 54, 16, 206, 253, 211,
