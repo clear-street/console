@@ -27,6 +27,8 @@ var _ Serde = (*CLSTHeaderSchemaSerde)(nil)
 type CLSTHeaderSchemaSerde struct{}
 
 // SerializeObject implements Serde.
+//
+//nolint:gocognit,cyclop // lots of supported inputs.
 func (headerSchemaSerde CLSTHeaderSchemaSerde) SerializeObject(_ context.Context, _ any, _ PayloadType, _ ...SerdeOpt) ([]byte, error) {
 	return nil, fmt.Errorf("CLST Serialize Not implemented")
 }
