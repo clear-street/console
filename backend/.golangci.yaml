@@ -105,6 +105,20 @@ linters-settings:
     allow-unused: false
     require-explanation: true
     require-specific: true
+    exclude-rules:
+      - linters:
+          - staticcheck
+        source: "pkg/proto/service.go"
+      - linters:
+          - staticcheck
+        source: "pkg/console/broker_config.go"
+      - linters:
+          - staticcheck
+        source: "pkg/serde/protobuf.go"
+      - linters:
+          - staticcheck
+        source: "pkg/serde/protobuf_schema.go"
+
   # We do not want every usage of fmt.Errorf to use %w.
   errorlint:
     errorf: false
