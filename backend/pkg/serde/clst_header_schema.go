@@ -28,7 +28,7 @@ type CLSTHeaderSchemaSerde struct{}
 
 // SerializeObject implements Serde.
 //
-//nolint:gocognit,cyclop // lots of supported inputs.
+//nolint:revive // lots of supported inputs.
 func (headerSchemaSerde CLSTHeaderSchemaSerde) SerializeObject(_ context.Context, _ any, _ PayloadType, _ ...SerdeOpt) ([]byte, error) {
 	return nil, fmt.Errorf("CLST Serialize Not implemented")
 }
@@ -39,6 +39,8 @@ func (CLSTHeaderSchemaSerde) Name() PayloadEncoding {
 }
 
 // DeserializePayload maps relevant headers into SchemaInfo
+//
+//nolint:revive // lots of supported inputs.
 func (headerSchemaSerde CLSTHeaderSchemaSerde) DeserializePayload(_ context.Context, record *kgo.Record, payloadType PayloadType) (*RecordPayload, error) {
 	// fmt.Printf("Record Value: %+v \n\n Record Key: %s\n\n", string(record.Value), string(record.Key))
 	schemaInfo, err := getSchemaInfoFromHeaders(record)
