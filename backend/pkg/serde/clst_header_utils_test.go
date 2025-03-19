@@ -92,7 +92,6 @@ var rawProtoBKTransactionKey = []byte{
 	98, 99, 55, 56, 55, 55, 49, 51, 54, 98, 55, 50,
 }
 
-//nolint:unused // Kept for test purposes
 var rawProtoLunaSessionCordEvents = []byte{
 	10, 36, 55, 101, 51, 48, 55, 48, 54, 55, 45, 56, 51, 52, 100, 45, 52, 55, 56, 49, 45,
 	57, 49, 55, 101, 45, 57, 101, 56, 53, 51, 99, 99, 54, 54, 98, 56, 54, 16, 206, 253, 211,
