@@ -80,7 +80,7 @@ func (headerSchemaSerde CLSTHeaderSchemaSerde) DeserializePayload(ctx context.Co
 		return &RecordPayload{}, fmt.Errorf("failed to marshal dynamic Message: %w", err)
 	}
 
-	var native interface{}
+	var native any
 	if err := json.Unmarshal(jsonBytes, &native); err != nil {
 		return nil, fmt.Errorf("json.Unmarshal dynamic message: %w", err)
 	}

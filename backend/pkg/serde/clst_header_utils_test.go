@@ -115,7 +115,6 @@ var rawProtoLunaSessionCordEvents = []byte{
 }
 
 func TestGetMessageDescriptor_Success(t *testing.T) {
-
 	module := "clst.buf.team/fleet/bk"
 	version := "main"
 	symbols := []string{"apollo.bk.v1.Event"}
@@ -255,13 +254,12 @@ func TestGetModule(t *testing.T) {
 	}
 }
 
-func TestInspectRawProtobuf(t *testing.T) {
+func TestInspectRawProtobuf(_ *testing.T) {
 	jsonBytes := rawProtoBKTransactionKey
-
 	inspectRawProtobuf(jsonBytes, "")
 }
 
-func TestFixKeys(t *testing.T) {
+func TestFixKeys(_ *testing.T) {
 	jsonBytes, err := os.ReadFile("../../../bk_luna_calculation_session.json")
 	if err != nil {
 		fmt.Printf("failed to read file: %v", err)

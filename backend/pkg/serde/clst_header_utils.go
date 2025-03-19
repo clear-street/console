@@ -23,6 +23,7 @@ import (
 
 const jsonFieldFileDescriptor = "fileDescriptorSet"
 
+// Header represents metadata information for records.
 type Header struct {
 	Key   string
 	Value []byte
@@ -35,10 +36,6 @@ type SchemaInfo struct {
 	ValueEncoding     string `header:"value.encoding"`
 	ProtobufTypeKey   string `header:"protobuf.type.key"`
 	ProtobufTypeValue string `header:"protobuf.type.value"`
-}
-
-type Config struct {
-	Mappings map[string]string `yaml:"mappings"`
 }
 
 var nameToModule = map[string]string{
@@ -133,7 +130,7 @@ func getSchemaInfoFromHeaders(record *kgo.Record) (SchemaInfo, error) {
  */
 func getMessageDescriptor(module string, version string, symbols []string, fullyQualifiedName string) (protoreflect.MessageDescriptor, error) {
 
-	requestMap := map[string]interface{}{
+	requestMap := map[string]any{
 		"module":  module,
 		"version": version,
 		"symbols": symbols,

@@ -45,7 +45,7 @@ const (
 	PayloadEncodingUint PayloadEncoding = "uint"
 	// PayloadEncodingCbor is the enum of cbor types.
 	PayloadEncodingCbor PayloadEncoding = "cbor"
-	//	PayloadEncodingCLSTHeaderSchema is the enum of clstHeaderSchema types.
+	// PayloadEncodingCLSTHeaderSchema is the enum for CLST header schema types.
 	PayloadEncodingCLSTHeaderSchema PayloadEncoding = "clstHeaderSchema"
 )
 
