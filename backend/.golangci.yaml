@@ -96,11 +96,6 @@ linters:
     - wastedassign
     - whitespace
 linters-settings:
-  exclude:
-  - pkg/proto/service.go
-  - pkg/console/broker_config.go
-  - pkg/serde/protobuf.go
-  - pkg/serde/protobuf_schema.go
   # A default case ensures we have checked everything. We should not require
   # every enum to be checked if we want to default.
   exhaustive:
