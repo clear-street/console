@@ -170,7 +170,7 @@ func getMessageDescriptor(module string, version string, symbols []string, fully
 	if !ok {
 		return nil, fmt.Errorf("missing fileDescriptorSet key in JSON")
 	}
-	var unmarshalOptions = protojson.UnmarshalOptions{
+	unmarshalOptions := protojson.UnmarshalOptions{
 		DiscardUnknown: true, // This prevents failures due to unknown fields
 	}
 	var fileDescriptor descriptorpb.FileDescriptorSet

@@ -55,7 +55,6 @@ var rawProtoBKEvent = []byte{
 	97, 55, 52, 54, 99, 98, 56, 50, 52, 50, 57, 54, 56,
 }
 
-//nolint:unused // Kept for test purposes
 var rawProtoBKTransactionKey = []byte{
 	10, 12, 84, 114, 97, 100, 101, 67, 114, 101, 97, 116, 101, 100, 18, 13,
 	98, 107, 116, 120, 112, 114, 111, 99, 101, 115, 115, 111, 114, 24, 230, 191,
