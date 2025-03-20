@@ -152,6 +152,7 @@ linters-settings:
       - typeDefFirst
       - paramTypeCombine
       - unnamedResult
+      - commentedOutCode
       #settings:
       #  hugeParam:
       #    sizeThreshold: 256
@@ -207,3 +208,5 @@ linters-settings:
         disabled: true
       - name: var-naming
         disabled: true
+  staticcheck:
+    checks: ["-SA9003"] # Ignore warnings about commented-out code
