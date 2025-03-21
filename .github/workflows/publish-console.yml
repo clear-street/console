@@ -1,0 +1,51 @@
+name: Publish Redpanda Console Docker Image
+
+on:
+  push:
+    branches:
+      - main  # Adjust as needed
+
+jobs:
+  build-and-publish:
+    runs-on: ubuntu-latest
+
+    envs:
+      JFROG_USERNAME: ${{ secrets.JFROG_USERNAME }}
+      JFROG_PASSWORD: ${{ secrets.JFROG_PASSWORD }}
+      ARTIFACTORY_URL: "https://artifacts.co.clearstreet.io/artifactory"
+      IMAGE_NAME: redpanda-console
+      IMAGE_TAG: latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Install JFrog CLI
+        run: |
+          curl -fL https://getcli.jfrog.io | sh
+          chmod +x jf
+          sudo mv jf /usr/local/bin/
+
+      - name: Authenticate with JFrog
+        env:
+          JFROG_USERNAME: ${{ secrets.JFROG_USERNAME }}
+          JFROG_PASSWORD: ${{ secrets.JFROG_PASSWORD }}
+          ARTIFACTORY_URL: "https://artifacts.co.clearstreet.io/artifactory"
+        run: |
+          jf rt config --url="${ARTIFACTORY_URL}" --user="${JFROG_USERNAME}" --password="${JFROG_PASSWORD}" --interactive=false
+
+      - name: Build Docker Image
+        run: |
+          docker build -t ${IMAGE_NAME}:${IMAGE_TAG} .
+
+      - name: Push Docker Image to JFrog
+        env:
+          BUILD_NAME: my-app-build
+          BUILD_NUMBER: ${{ github.run_number }}
+        run: |
+          jf rt dp ${IMAGE_NAME}:${IMAGE_TAG} \
+            --build-name=${BUILD_NAME} \
+            --build-number=${BUILD_NUMBER} \
+            --url=${ARTIFACTORY_URL} \
+            --user=${JFROG_USERNAME} \
+            --password=${JFROG_PASSWORD}
